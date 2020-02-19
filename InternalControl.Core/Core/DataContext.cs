@@ -14,6 +14,7 @@ namespace InternalControl.Core.Core
 
         public DataContext(DbContextOptions<DataContext> options) : base (options)
         {
+
         }
 
         public virtual DbSet<QuestionModel> Questions { get; set; }

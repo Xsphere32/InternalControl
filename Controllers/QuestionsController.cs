@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using InternalControl.Core.Core;
 using InternalControl.Core.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,7 +19,8 @@ namespace InternalControl.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _dataContext.Questions.ToListAsync());
+
+            return Ok("Test Message");
         }
         
         [HttpPost]
@@ -31,13 +28,21 @@ namespace InternalControl.Controllers
         {
             questionModel.GroupOfIndicators = await _dataContext.GroupOfIndicators.FirstOrDefaultAsync(i => i.Id == questionModel.GroupOfIndicators.Id);
             questionModel.Indicators = await _dataContext.Indicators.FirstOrDefaultAsync(i => i.Id == questionModel.Indicators.Id);
+            questionModel.TypeOfForm = await _dataContext.TypeOfForm.FirstOrDefaultAsync(i => i.Id == questionModel.Indicators.Id);
             await _dataContext.AddAsync(questionModel);
             int? x = await _dataContext.SaveChangesAsync();
             if (x.HasValue)
                 return Ok(true);
             else
                 return BadRequest("Прозошла ошибка");
-            
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            _dataContext.Entry(await _dataContext.Set<QuestionModel>().FirstOrDefaultAsync(i => i.Id == id)).State = EntityState.Deleted;
+            await _dataContext.SaveChangesAsync();
+            return Ok(true);
         }
     }
 }

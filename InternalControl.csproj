@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,9 +6,13 @@
 
   <ItemGroup>
     <Compile Remove="AngularApp\**" />
+    <Compile Remove="InternalControl.Core\**" />
     <Content Remove="AngularApp\**" />
+    <Content Remove="InternalControl.Core\**" />
     <EmbeddedResource Remove="AngularApp\**" />
+    <EmbeddedResource Remove="InternalControl.Core\**" />
     <None Remove="AngularApp\**" />
+    <None Remove="InternalControl.Core\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,8 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InternalControl.Core\InternalControl.Core.csproj" />
+    <ProjectReference Include="InternalControl.Core\InternalControl.Core.csproj" />
   </ItemGroup>
-
 
 </Project>

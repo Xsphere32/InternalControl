@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalControl", "InternalControl.csproj", "{902C15B7-9282-4496-A34B-623E2A03FD40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalControl.Core", "..\InternalControl.Core\InternalControl.Core.csproj", "{1344F93B-92FA-43D7-9D64-15128070AF6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalControl.Core", ".\InternalControl.Core\InternalControl.Core.csproj", "{1344F93B-92FA-43D7-9D64-15128070AF6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

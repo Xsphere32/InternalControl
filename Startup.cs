@@ -25,7 +25,7 @@ namespace InternalControl
             {
                 options.UseLazyLoadingProxies();
                 options.UseSqlServer(connectionString: Configuration[key: "ConnectionStrings:DefaultConnection"],
-                  sqlServerOptionsAction: b => b.MigrationsAssembly(assemblyName: "InternalControl.Core"));
+                  sqlServerOptionsAction: b => b.MigrationsAssembly(assemblyName: "InternalControl"));
             });
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
