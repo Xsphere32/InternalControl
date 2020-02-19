@@ -10,7 +10,7 @@ import { GroupofindicatorsComponent } from './Components/groupofindicators/group
 import { IndicatorsComponent } from './Components/indicators/indicators.component';
 import { QuestionComponent } from './Components/question/question.component';
 import {FormsModule} from '@angular/forms';
-import {ButtonModule} from 'primeng';
+import {ButtonModule, DropdownModule, InputTextModule} from 'primeng';
 
 @NgModule({
   declarations: [
@@ -28,6 +28,8 @@ import {ButtonModule} from 'primeng';
     BrowserModule,
     BrowserAnimationsModule,
     ButtonModule,
+    DropdownModule,
+    InputTextModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

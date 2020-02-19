@@ -9,13 +9,6 @@ import { Question } from './Core/Models/questionModel';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private questionsService : QuestionsService) {
-    
-  }
+  constructor(private questionsService: QuestionsService) {}
 
-  a : Question[];
-  ngOnInit(){
-    this.questionsService.GetQuestions().subscribe(res => this.a = res);
-  }
-  
 }

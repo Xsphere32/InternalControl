@@ -1,1 +1,3 @@
-<p>groupofindicators works!</p>
+<p-dropdown [options]="typesOfForm" [(ngModel)]="typeOfForm"  placeholder="Выберите тип анкеты"  optionLabel="name" ></p-dropdown>
+<input type="text" pInputText [(ngModel)]="groupOfIndicators.Name">
+<button pButton (click)="click()">Button</button>

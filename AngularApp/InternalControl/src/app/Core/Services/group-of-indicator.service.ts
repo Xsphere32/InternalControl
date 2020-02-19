@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { BaseUrl } from '../Constants/Constants';
 import { GroupOfIndicators } from '../Models/groupOfIndicatorsModel';
+import {TypeOfForm} from '../Models/typeOfFormModel';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,18 @@ export class GroupOfIndicatorService {
    * Метод получения всех типов показателей из API
    */
   public GetQuestions() {
-    var response = this.httpClient.get(`${BaseUrl}groupofindicator/get`);
+    this.httpClient.get(`${BaseUrl}groupOfIndicators`);
   }
 
   /**
    * Метод отправки данных в API
    */
   public PostQuestion(groupofindicator: GroupOfIndicators){
-    var requestBody = JSON.stringify(groupofindicator);
-    this.httpClient.post(`${BaseUrl}groupofindicator/post`, requestBody)
+    const requestBody = JSON.stringify(groupofindicator);
+    console.log(requestBody);
+    return this.httpClient.post<TypeOfForm>(`${BaseUrl}groupOfIndicators`, requestBody,
+      {headers: new HttpHeaders({'Content-Type': 'application/json'})}).subscribe(resp => console.log(resp), err => {
+      console.log(err);
+    });
   }
 }
