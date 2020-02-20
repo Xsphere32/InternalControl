@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseUrl } from '../Constants/Constants';
 import { Question } from '../Models/questionModel';
+import { PostFilter } from '../Models/postFiltersModel';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,17 @@ export class QuestionsService {
    */
   public PostQuestion(question: Question){
     var requestBody = JSON.stringify(question);
-    this.httpClient.post(`${BaseUrl}questions/post`, requestBody)
+    this.httpClient.post(`${BaseUrl}questions`, requestBody,
+    {headers: new HttpHeaders({'Content-Type': 'application/json'})}).subscribe(resp => console.log(resp), err => {
+    console.log(err);})
+  }
+
+  /**
+   * PostFilters
+   */
+  public PostFilters(filter: PostFilter) {
+    var requestBody = JSON.stringify(filter);
+    return this.httpClient.post<Question[]>(`${BaseUrl}questions/filter`, requestBody,
+    {headers: new HttpHeaders({'Content-Type': 'application/json'})});
   }
 }

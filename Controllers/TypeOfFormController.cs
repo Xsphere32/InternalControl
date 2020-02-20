@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using InternalControl.Core.Core;
 using InternalControl.Core.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +21,7 @@ namespace InternalControl.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _dataContext.TypeOfForm.ToListAsync());
+            return Ok(await _dataContext.TypeOfForm.Select(m => new { m.Id, m.Name }).ToListAsync());
         }
         
         [HttpPost]

@@ -1,1 +1,19 @@
-<p>question works!</p>
+<p-dropdown [options]="typesOfForm" [(ngModel)]="typeOfForm" (onChange)="onTypesChange()" placeholder="Выберите тип анкеты"  optionLabel="name"></p-dropdown>
+<p-dropdown [options]="groupsOfIndicators" [(ngModel)]="groupOfIndicators" (onChange)="onGroupsChange()"  placeholder="Выберите группу показателей"  optionLabel="name" ></p-dropdown>
+<p-dropdown [options]="indicartors" [(ngModel)]="indicator"  placeholder="Выберите показатель"  optionLabel="name"></p-dropdown>
+<input type="text" pInputText [(ngModel)]="question.Name">
+<button pButton (click)="submit()">Button</button>
+<table>
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Название вопроса</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  *ngFor="let item of questions">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+        </tr>
+    </tbody>
+</table>

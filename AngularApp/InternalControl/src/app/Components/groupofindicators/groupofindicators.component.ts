@@ -25,11 +25,12 @@ export class GroupofindicatorsComponent implements OnInit {
   }
 
   click() {
-    if (this.typeOfForm === null) {
-      alert('Укажите тип анкеты!')
-      return;
+    if (this.groupOfIndicators.Name && this.typeOfForm){
+      this.groupOfIndicators.TypeOfForm = this.typeOfForm;
+      this.groupOfIndicatorsService.Post(this.groupOfIndicators);
+      alert(`Создано + ${this.groupOfIndicators.Name}`);
     } else {
-      this.groupOfIndicatorsService.PostQuestion(this.groupOfIndicators);
+      alert('Укажите название и/или выберите предшествующие значения!');
       return;
     }
   }

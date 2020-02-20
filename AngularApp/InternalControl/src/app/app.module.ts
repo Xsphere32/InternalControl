@@ -11,6 +11,7 @@ import { IndicatorsComponent } from './Components/indicators/indicators.componen
 import { QuestionComponent } from './Components/question/question.component';
 import {FormsModule} from '@angular/forms';
 import {ButtonModule, DropdownModule, InputTextModule} from 'primeng';
+import { FormsComponent } from './Components/forms/forms.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {ButtonModule, DropdownModule, InputTextModule} from 'primeng';
     TypeofformComponent,
     GroupofindicatorsComponent,
     IndicatorsComponent,
-    QuestionComponent
+    QuestionComponent,
+    FormsComponent
   ],
   imports: [
     BrowserModule,

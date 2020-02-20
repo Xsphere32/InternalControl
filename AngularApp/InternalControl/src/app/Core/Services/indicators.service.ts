@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseUrl } from '../Constants/Constants';
 import { Indicator } from '../Models/indicatorModel';
+import { PostFilter } from '../Models/postFiltersModel';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +14,26 @@ export class IndicatorsService {
   /**
    * Метод получения всех показателей из API
    */
-  public GetQuestions() {
-    var response = this.httpClient.get(`${BaseUrl}indicators/get`);
+  public Get() {
+    return this.httpClient.get<Indicator[]>(`${BaseUrl}indicators`);
   }
 
   /**
    * Метод отправки данных в API
    */
-  public PostQuestion(indicator: Indicator){
+  public Post(indicator: Indicator){
     var requestBody = JSON.stringify(indicator);
-    this.httpClient.post(`${BaseUrl}indicators/post`, requestBody)
+    this.httpClient.post(`${BaseUrl}indicators`, requestBody,
+    {headers: new HttpHeaders({'Content-Type': 'application/json'})}).subscribe(resp => console.log(resp), err => {
+    console.log(err);})
+  }
+
+  /**
+   * PostFilters
+   */
+  public PostFilters(filter: PostFilter) {
+    var requestBody = JSON.stringify(filter);
+    return this.httpClient.post<Indicator[]>(`${BaseUrl}indicators/filter`, requestBody,
+    {headers: new HttpHeaders({'Content-Type': 'application/json'})});
   }
 }

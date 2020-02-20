@@ -17,6 +17,7 @@ export class TypeofformComponent implements OnInit {
 
   SendModel() {
     this.typeOfFormsService.PostQuestion(this.typeOfForm);
+    alert('Создано' + this.typeOfForm);
   }
 
 }

@@ -2,23 +2,10 @@
 
 namespace InternalControl.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "GroupOfIndicators",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GroupOfIndicators", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "TypeOfForm",
                 columns: table => new
@@ -33,12 +20,33 @@ namespace InternalControl.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GroupOfIndicators",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    TypeOfFormId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupOfIndicators", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GroupOfIndicators_TypeOfForm_TypeOfFormId",
+                        column: x => x.TypeOfFormId,
+                        principalTable: "TypeOfForm",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Indicators",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
+                    TypeOfFormId = table.Column<int>(nullable: true),
                     GroupOfIndicatorsId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -48,6 +56,12 @@ namespace InternalControl.Migrations
                         name: "FK_Indicators_GroupOfIndicators_GroupOfIndicatorsId",
                         column: x => x.GroupOfIndicatorsId,
                         principalTable: "GroupOfIndicators",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Indicators_TypeOfForm_TypeOfFormId",
+                        column: x => x.TypeOfFormId,
+                        principalTable: "TypeOfForm",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -88,9 +102,19 @@ namespace InternalControl.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_GroupOfIndicators_TypeOfFormId",
+                table: "GroupOfIndicators",
+                column: "TypeOfFormId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Indicators_GroupOfIndicatorsId",
                 table: "Indicators",
                 column: "GroupOfIndicatorsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Indicators_TypeOfFormId",
+                table: "Indicators",
+                column: "TypeOfFormId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_GroupOfIndicatorsId",
@@ -117,10 +141,10 @@ namespace InternalControl.Migrations
                 name: "Indicators");
 
             migrationBuilder.DropTable(
-                name: "TypeOfForm");
+                name: "GroupOfIndicators");
 
             migrationBuilder.DropTable(
-                name: "GroupOfIndicators");
+                name: "TypeOfForm");
         }
     }
 }

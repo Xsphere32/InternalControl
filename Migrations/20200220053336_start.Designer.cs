@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InternalControl.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200219183113_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200220053336_start")]
+    partial class start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,7 +31,12 @@ namespace InternalControl.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TypeOfFormId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TypeOfFormId");
 
                     b.ToTable("GroupOfIndicators");
                 });
@@ -49,9 +54,14 @@ namespace InternalControl.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TypeOfFormId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GroupOfIndicatorsId");
+
+                    b.HasIndex("TypeOfFormId");
 
                     b.ToTable("Indicators");
                 });
@@ -104,11 +114,22 @@ namespace InternalControl.Migrations
                     b.ToTable("TypeOfForm");
                 });
 
+            modelBuilder.Entity("InternalControl.Core.Models.GroupOfIndicatorsModel", b =>
+                {
+                    b.HasOne("InternalControl.Core.Models.TypeOfForm", "TypeOfForm")
+                        .WithMany()
+                        .HasForeignKey("TypeOfFormId");
+                });
+
             modelBuilder.Entity("InternalControl.Core.Models.IndicatorsModel", b =>
                 {
                     b.HasOne("InternalControl.Core.Models.GroupOfIndicatorsModel", "GroupOfIndicators")
                         .WithMany()
                         .HasForeignKey("GroupOfIndicatorsId");
+
+                    b.HasOne("InternalControl.Core.Models.TypeOfForm", "TypeOfForm")
+                        .WithMany()
+                        .HasForeignKey("TypeOfFormId");
                 });
 
             modelBuilder.Entity("InternalControl.Core.Models.QuestionModel", b =>

@@ -6,5 +6,6 @@ namespace InternalControl.Core.Models
 {
     public class GroupOfIndicatorsModel : BaseModel
     {
+        public virtual TypeOfForm TypeOfForm { get; set; }
     }
 }

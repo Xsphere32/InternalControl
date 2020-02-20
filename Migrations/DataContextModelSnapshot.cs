@@ -19,6 +19,67 @@ namespace InternalControl.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("InternalControl.Core.Models.AnswersModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Answer")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AnswersModel");
+                });
+
+            modelBuilder.Entity("InternalControl.Core.Models.Form", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TypeOfFormId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeOfFormId");
+
+                    b.ToTable("Forms");
+                });
+
+            modelBuilder.Entity("InternalControl.Core.Models.FormQuestion", b =>
+                {
+                    b.Property<int>("FormId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AnswersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("FormId", "QuestionId");
+
+                    b.HasIndex("AnswersId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("FormQuestions");
+                });
+
             modelBuilder.Entity("InternalControl.Core.Models.GroupOfIndicatorsModel", b =>
                 {
                     b.Property<int>("Id")
@@ -29,7 +90,12 @@ namespace InternalControl.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TypeOfFormId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TypeOfFormId");
 
                     b.ToTable("GroupOfIndicators");
                 });
@@ -47,9 +113,14 @@ namespace InternalControl.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TypeOfFormId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GroupOfIndicatorsId");
+
+                    b.HasIndex("TypeOfFormId");
 
                     b.ToTable("Indicators");
                 });
@@ -61,8 +132,8 @@ namespace InternalControl.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Answer")
-                        .HasColumnType("bit");
+                    b.Property<int?>("AnswerId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("GroupOfIndicatorsId")
                         .HasColumnType("int");
@@ -77,6 +148,8 @@ namespace InternalControl.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
 
                     b.HasIndex("GroupOfIndicatorsId");
 
@@ -102,15 +175,56 @@ namespace InternalControl.Migrations
                     b.ToTable("TypeOfForm");
                 });
 
+            modelBuilder.Entity("InternalControl.Core.Models.Form", b =>
+                {
+                    b.HasOne("InternalControl.Core.Models.TypeOfForm", "TypeOfForm")
+                        .WithMany()
+                        .HasForeignKey("TypeOfFormId");
+                });
+
+            modelBuilder.Entity("InternalControl.Core.Models.FormQuestion", b =>
+                {
+                    b.HasOne("InternalControl.Core.Models.AnswersModel", "Answers")
+                        .WithMany()
+                        .HasForeignKey("AnswersId");
+
+                    b.HasOne("InternalControl.Core.Models.Form", "Form")
+                        .WithMany("FormQuestions")
+                        .HasForeignKey("FormId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InternalControl.Core.Models.QuestionModel", "Question")
+                        .WithMany("FormQuestions")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("InternalControl.Core.Models.GroupOfIndicatorsModel", b =>
+                {
+                    b.HasOne("InternalControl.Core.Models.TypeOfForm", "TypeOfForm")
+                        .WithMany()
+                        .HasForeignKey("TypeOfFormId");
+                });
+
             modelBuilder.Entity("InternalControl.Core.Models.IndicatorsModel", b =>
                 {
                     b.HasOne("InternalControl.Core.Models.GroupOfIndicatorsModel", "GroupOfIndicators")
                         .WithMany()
                         .HasForeignKey("GroupOfIndicatorsId");
+
+                    b.HasOne("InternalControl.Core.Models.TypeOfForm", "TypeOfForm")
+                        .WithMany()
+                        .HasForeignKey("TypeOfFormId");
                 });
 
             modelBuilder.Entity("InternalControl.Core.Models.QuestionModel", b =>
                 {
+                    b.HasOne("InternalControl.Core.Models.AnswersModel", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId");
+
                     b.HasOne("InternalControl.Core.Models.GroupOfIndicatorsModel", "GroupOfIndicators")
                         .WithMany()
                         .HasForeignKey("GroupOfIndicatorsId");
@@ -120,7 +234,7 @@ namespace InternalControl.Migrations
                         .HasForeignKey("IndicatorsId");
 
                     b.HasOne("InternalControl.Core.Models.TypeOfForm", "TypeOfForm")
-                        .WithMany()
+                        .WithMany("Questions")
                         .HasForeignKey("TypeOfFormId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -1,3 +1,15 @@
-<p-dropdown [options]="typesOfForm" [(ngModel)]="typeOfForm"  placeholder="Выберите тип анкеты"  optionLabel="name" ></p-dropdown>
-<input type="text" pInputText [(ngModel)]="groupOfIndicators.Name">
-<button pButton (click)="click()">Button</button>
+<div class="col-lg-6">
+    <div class="col-sm-12">
+        <div class="col-sm-3"><label style="width: 100%;">Тип анкеты:</label></div>
+        <p-dropdown class="col-sm-3" [options]="typesOfForm" [(ngModel)]="typeOfForm"  placeholder="Выберите тип анкеты"  optionLabel="name"></p-dropdown>
+        
+    </div>
+    <div class="col-sm-12">
+        <div class="col-sm-3"><label style="width: 100%;">Группа показателей:</label></div>
+        <input class="col-sm-3" type="text" pInputText [(ngModel)]="groupOfIndicators.Name">
+    </div>
+    <div class="col-sm-12">
+        <button class="col-sm-1" pButton (click)="click()">Создать</button>
+    </div>
+    
+</div>

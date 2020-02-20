@@ -1,0 +1,6 @@
+<ng-template>
+    <p-dropdown [options]="typesOfForm" [(ngModel)]="typeOfForm" (onHide)="onHide()"  placeholder="Выберите тип анкеты"  optionLabel="name"></p-dropdown>
+    <p-dropdown [options]="groupsOfIndicators" [(ngModel)]="groupOfIndicators"  placeholder="Выберите группу показателей"  optionLabel="name" ></p-dropdown>
+    <p-dropdown [options]="indicartors" [(ngModel)]="indicator"  placeholder="Выберите показатель"  optionLabel="name"></p-dropdown>
+    <p-dropdown [options]="questions" [(ngModel)]="question"  placeholder="Выберите показатель"  optionLabel="name"></p-dropdown>
+</ng-template>
