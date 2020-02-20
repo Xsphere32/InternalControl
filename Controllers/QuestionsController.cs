@@ -57,7 +57,7 @@ namespace InternalControl.Controllers
             await _dataContext.SaveChangesAsync();
             return Ok(true);
         }
-
+        [EnableCors]
         [HttpPost]
         [Route("filter")]
         public async Task<IActionResult> PostAllFiltered(BaseFilterModel filter)
@@ -75,7 +75,7 @@ namespace InternalControl.Controllers
             {
                 query = query.Where(i => i.Indicators.Id == filter.Indicators.Id);
             }
-            return Ok(await query.ToListAsync());
+            return Ok(await query.Select(m => new { m.Id, m.Name }).ToListAsync());
         }
     }
 }

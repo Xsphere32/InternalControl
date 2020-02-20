@@ -68,7 +68,7 @@ namespace InternalControl.Controllers
             {
                 query = query.Where(i => i.TypeOfForm.Id == filter.TypeOfForm.Id);
             }
-            return Ok(await query.ToListAsync());
+            return Ok(await query.Select(m => new { m.Id, m.Name }).ToListAsync());
         }
     }
 }

@@ -42,12 +42,11 @@ namespace InternalControl
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCors("MyPolicy");
+            
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseCors("MyPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -67,7 +67,7 @@ export class QuestionComponent implements OnInit {
     let Filter: PostFilter = new PostFilter();
     Filter.TypeOfForm = this.typeOfForm;
     Filter.GroupOfIndicators = this.groupOfIndicators;
-    this.groupOfIndicatorsService.PostFilters(Filter).subscribe(resp => this.groupsOfIndicators = resp);
+    this.indicatorsService.PostFilters(Filter).subscribe(resp => this.indicartors = resp);
     return;
   }
 

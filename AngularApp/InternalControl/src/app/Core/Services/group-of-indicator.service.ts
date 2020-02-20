@@ -36,6 +36,6 @@ export class GroupOfIndicatorService {
   public PostFilters(filter: PostFilter) {
     var requestBody = JSON.stringify(filter);
     return this.httpClient.post<GroupOfIndicators[]>(`${BaseUrl}groupOfIndicators/filter`, requestBody,
-    {headers: new HttpHeaders({'Content-Type': 'application/json'})});
+    {headers: new HttpHeaders({'Content-Type': 'application/json'}),});
   }
 }
